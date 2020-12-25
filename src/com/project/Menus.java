@@ -13,7 +13,9 @@ public class Menus {
         int choice = input.nextInt();
         switch (choice) {
             case 1:
-                //sign in function
+                boolean isLogged = false;
+                while (!isLogged)
+                    isLogged = Users.signIn();
                 break;
             case 2:
                 // sign up function
