@@ -46,7 +46,7 @@ public class Garage {
                     "\n Body_type :" + values[car_num][7] +
                     "\n price : " + values[car_num][8] +
                     "\n available : " + values[car_num][9] +
-                    " car id: " + values[car_num][10] +
+                    "\n car id: " + values[car_num][10] +
                     "\n  __________________________________________________________");
 
             car_num++;
@@ -56,7 +56,7 @@ public class Garage {
     }
 
     public void next() {
-        Scanner input = new Scanner(System.in);
+        //Scanner input = new Scanner(System.in);
         System.out.print("""
                 1 - search.
                 2 - buy.
@@ -80,8 +80,8 @@ public class Garage {
         System.out.print("""
                  *********************************************************
                 1 - search by manufacturer type.
-                2 - search by cost.
-                3 - search by year of purchase.
+                2 - search by year of purchase.
+                3 - search by cost.
                 type your choice : 
                 """);
         int c1 = input.nextInt();
@@ -140,7 +140,7 @@ public class Garage {
     public void search(int year) {
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
-            if (year == Integer.parseInt(values[i][3])) {
+            if (year >= Integer.parseInt(values[i][3])) {
                 found = true;
                 System.out.println("\n  __________________________________________________________" +
                         "\n car id: " + i +
@@ -216,9 +216,11 @@ public class Garage {
     {
         System.out.print("type car id you want to buy : ");
         int id = input.nextInt();
+        boolean found = false;
         for (int i = 1; i < car_num; i++) {
             if (id == Integer.parseInt(values[i][10]))
             {
+                found = true;
                 System.out.println("\n  __________________________________________________________" +
                         "\n car id: " + i +
                         "\n brand : " + values[i][0] +
@@ -241,13 +243,13 @@ public class Garage {
                 {
                     System.out.println("sorry, this car is not available now please try again later.");
                 }
-                break;
             }
-            else {
-                System.out.println("no results , please try again.");
-                buy();
-            }
+
         }
+        if (!found){
+        System.out.println("no results , please try again.");
+        buy();
+    }
     }
 }
 
