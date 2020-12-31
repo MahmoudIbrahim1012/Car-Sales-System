@@ -51,11 +51,12 @@ public class Car extends Garage {
         String id_checker = input.next();
         int k;
         if ((k = check(id_checker)) > 0) {
-            for (; k < car_num - 1; k++) {
+            for (; k < car_num -1; k++) {
                 for (int j = 0; j < 11; j++) {
                     values[k][j] = values[k + 1][j];
                 }
             }
+            car_num--;
         } else {
             System.out.println("invalid input , please try again.");
             delete(path);
@@ -66,7 +67,7 @@ public class Car extends Garage {
 
             StringBuilder sb = new StringBuilder();
 
-            for (int i = 0; i < car_num-1; i++) {
+            for (int i = 1; i < car_num; i++) {
                 for (int j = 0; j < 11; j++) {
                     sb.append(values[i][j]);
                     if (j < 10) {
@@ -77,6 +78,7 @@ public class Car extends Garage {
             }
             pw.write(sb.toString());
             pw.close();
+            System.out.println("car has been deleted.");
             next();
 
 
@@ -113,7 +115,7 @@ public class Car extends Garage {
 
                 StringBuilder sb = new StringBuilder();
 
-                for (int i = 0; i < car_num; i++) {
+                for (int i = 1; i < car_num; i++) {
                     for (int j = 0; j < 11; j++) {
                         sb.append(values[i][j]);
                         if (j < 10) {
@@ -137,7 +139,7 @@ public class Car extends Garage {
     }
 
     public void add(){
-
+    //nada
     }
 }
 

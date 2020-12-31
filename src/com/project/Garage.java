@@ -34,7 +34,7 @@ public class Garage {
             for (int i = 0; i < temporary.length; i++) {
                 values[car_num][i] = temporary[i];
             }
-            //values[car_num][10] = String.valueOf(car_num);
+
             System.out.println("----------------------------------------------------------\n" +
                     "\n car id: " + values[car_num][0] +
                     "\n brand : " + values[car_num][1] +
