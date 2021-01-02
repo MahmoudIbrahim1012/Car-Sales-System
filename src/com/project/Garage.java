@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class Garage {
 
     String path = "Data.csv";
-            //"C:\\Users\\user\\IdeaProjects\\Car-Sales-System\\Data.csv";
     String line = "";
     String[][] values = new String[100][11];
     int car_num = 1;
