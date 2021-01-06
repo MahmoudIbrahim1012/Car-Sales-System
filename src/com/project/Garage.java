@@ -1,9 +1,6 @@
 package com.project;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Garage {
@@ -34,7 +31,7 @@ public class Garage {
                 values[car_num][i] = temporary[i];
             }
 
-            System.out.println("----------------------------------------------------------\n" +
+            /*System.out.println("----------------------------------------------------------\n" +
                     "\n car id: " + values[car_num][0] +
                     "\n brand : " + values[car_num][1] +
                     "\n model : " + values[car_num][2] +
@@ -47,10 +44,10 @@ public class Garage {
                     "\n price : " + values[car_num][9] +
                     "\n available : " + values[car_num][10] +
                     "\n  __________________________________________________________");
-
+*/
             car_num++;
         }
-        //System.out.println(car_num);
+
         next();
     }
 
@@ -59,19 +56,44 @@ public class Garage {
         System.out.print("""
                 1 - search.
                 2 - buy.
+                3 - view.
                 enter your choice : 
                 """);
         int choice = input.nextInt();
 
         if (choice == 1) {
             search_type();
-        } else if (choice == 2) {
+        }
+        else if (choice == 2) {
             buy();
-        } else {
+        }
+        else if (choice == 3) {
+            view();
+        }
+        else {
             System.out.println("invalid input , please try again.");
             next();
         }
 
+    }
+
+    public void view ()
+    {
+        for (int i = 1; i < car_num; i++) {
+            System.out.println(
+                "\n car id: " + values[i][0] +
+                "\n brand : " + values[i][1] +
+                "\n model : " + values[i][2] +
+                "\n Condition :" + values[i][3] +
+                "\n year of purchase : " + values[i][4] +
+                "\n Transmission :" + values[i][5] +
+                "\n Engine Capacity" + values[i][6] +
+                "\n colors : " + values[i][7] +
+                "\n Body_type :" + values[i][8] +
+                "\n price : " + values[i][9] +
+                "\n available : " + values[i][10] +
+                "\n  __________________________________________________________");
+        }
     }
 
     public void search_type() {
@@ -110,7 +132,7 @@ public class Garage {
     public void search(String brand) {
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
-            if ((brand.toLowerCase()).equals(values[i][1].toLowerCase())) {
+            if (brand.equalsIgnoreCase(values[i][1])) {
                 found = true;
                 System.out.println(
                                 "\n car id: " + values[i][0] +
@@ -131,8 +153,9 @@ public class Garage {
         if (!found) {
             System.out.println("no results , please try again.");
             search_type();
-        } else {
-            after_search();
+        }
+        else {
+            next();
         }
     }
 
@@ -160,7 +183,7 @@ public class Garage {
             System.out.println("no results , please try again.");
             search_type();
         } else {
-            after_search();
+            next();
         }
     }
 
@@ -187,27 +210,9 @@ public class Garage {
         if (!found) {
             System.out.println("no results , please try again.");
             search_type();
-        } else {
-            after_search();
-        }
-    }
-
-    public void after_search() {
-        System.out.print("""
-                1 - search again.
-                2 - buy a car.
-                type your choice :  
-                """);
-        int c1 = input.nextInt();
-        if (c1 == 1) {
-            search_type();
-        }
-        else if (c1 == 2) {
-            buy();
         }
         else {
-            System.out.println("invalid input , please try again.");
-            after_search();
+            next();
         }
     }
 
@@ -237,6 +242,7 @@ public class Garage {
                 {
                     System.out.print("\n the car was bought successfully");
                     values[i][10]= String.valueOf(Integer.parseInt(values[i][10])-1);
+                    file_setter();
                 }
                 else
                 {
@@ -249,6 +255,28 @@ public class Garage {
         System.out.println("no results , please try again.");
         buy();
     }
+        next();
+    }
+
+    public void file_setter()
+    {
+        try {
+            PrintWriter pw = new PrintWriter(new File("Data.csv"));
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 1; i < car_num; i++) {
+                for (int j = 0; j < 11; j++) {
+                    sb.append(values[i][j]);
+                    if (j < 10) {
+                        sb.append(",");
+                    }
+                }
+                sb.append("\r\n");
+            }
+            pw.write(sb.toString());
+            pw.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
-

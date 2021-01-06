@@ -1,7 +1,4 @@
 package com.project;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 
 
 public class Car extends Garage {
@@ -14,50 +11,111 @@ public class Car extends Garage {
                 2 - Delete.
                 3 - Edit Price.
                 4 - Add.
+                5 - view.
                 enter your choice : 
                 """);
         int choice = input.nextInt();
 
         if (choice == 1) {
             search_type();
-        } else if (choice == 2) {
+        }
+        else if (choice == 2) {
             delete(path);
-        } else if (choice == 3) {
+        }
+        else if (choice == 3) {
             edit(path);
-        } else if (choice == 4) {
+        }
+        else if (choice == 4) {
             add();
-        } else {
+        }
+        else if (choice == 5) {
+            view();
+        }
+        else {
             System.out.println("invalid input , please try again.");
             next();
         }
-
     }
 
-    public int check(String id) {
-        for (int i = 0; i < car_num; i++) {
-            if (id.equals(values[i][0])) {
-                return i;
+    public boolean is_number(String x)
+    {
+        try {
+            Integer.parseInt(x);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public String id_setter() {
+        String id;
+        boolean unique= true;
+        if (is_number(id = input.next())) {
+            for (int i = 1; i < car_num; i++) {
+                if (id.equalsIgnoreCase(values[i][0])) {
+                    unique = false;
+                    break;
+                }
+            }
+            if (unique){
+                return id;
             }
         }
-        return -1;
+        System.out.print("invalid input , please enter the car id again :");
+        return id_setter();
+    }
+
+    public String year_setter()
+    {
+        String num;
+        if (is_number(num = input.next()))
+        {
+            if (Integer.parseInt(num)<=2021 && Integer.parseInt(num)>1900)
+            {
+                return num;
+            }
+        }
+        System.out.print("invalid input , please enter the car year again :");
+
+        return year_setter();
+    }
+
+    public String price_or_available_setter()
+    {
+        String num;
+        if (is_number(num = input.next()))
+        {
+
+            if (Integer.parseInt(num)>0)
+            {
+                return num;
+            }
+        }
+        System.out.print("invalid input , please enter your input again :");
+        return price_or_available_setter();
+    }
+
+    public int check_id() {
+        int id = input.nextInt();
+        for (int i = 1; i < car_num; i++) {
+            if (id == Integer.parseInt(values[i][0])) {
+                return id;
+            }
+        }
+        System.out.print("invalid input , please enter the car id again :");
+        return check_id();
     }
 
     public void delete(String Path) {
         System.out.println("please enter the car id you want to delete:");
-        String id_checker = input.next();
-        int k;
-        if ((k = check(id_checker)) > -1) {
-            for (; k < car_num - 1; k++) {
+            for (int k = check_id(); k < car_num - 1; k++) {
                 for (int j = 0; j < 11; j++) {
                     values[k][j] = values[k + 1][j];
                 }
             }
-            car_num--;
-        } else {
-            System.out.println("invalid input , please try again.");
-            delete(path);
-        }
-
+        car_num--;
         file_setter();
         System.out.println("car has been deleted.");
         next();
@@ -77,7 +135,6 @@ public class Car extends Garage {
                 if (check_id.equals(super.values[i][0])) {
                     found = true;
                     super.values[i][9] = new_price;
-
                 }
             }
         }
@@ -90,87 +147,38 @@ public class Car extends Garage {
             System.out.println("car has been updated");
             next();
         }
-
     }
 
     public void add() {
         String[] addfun = new String[11];
-                System.out.print(" car id: ");
-        if(check(addfun[0] = input.next())==-1)
-        {
-                System.out.print(" brand : ");
-                addfun[1]= input.next();
-                System.out.print(" model : " );
-                addfun[2]= input.next();
-                System.out.print("Condition :" );
-                addfun[3]= input.next();
-                System.out.print( " year of purchase : " );
-                addfun[4]= input.next();
-                System.out.print(" Transmission :" );
-                addfun[5]= input.next();
-                System.out.print(" Engine Capacity : " );
-                addfun[6]= input.next();
-                System.out.print(" colors : " );
-                addfun[7]= input.next();
-                System.out.print( " Body_type :" );
-                addfun[8]= input.next();
-                System.out.print("price : " );
-                addfun[9]= input.next();
-                System.out.print(" available : " );
-                addfun[10]= input.next();
-        }
-        else {
-            System.out.println("invalid input , please try again.");
-            add();
-        }
+        System.out.print("please enter the car id you want to add : ");
+        addfun[0]= id_setter();
+        System.out.print(" brand : ");
+        addfun[1]= input.next();
+        System.out.print(" model : " );
+        addfun[2]= input.next();
+        System.out.print("Condition (Used/new) : " );
+        addfun[3]= input.next();
+        System.out.print( " year of purchase : " );
+        addfun[4]= year_setter();
+        System.out.print(" Transmission (Automatic/manual):" );
+        addfun[5]= input.next();
+        System.out.print(" Engine Capacity : " );
+        addfun[6]= input.next();
+        System.out.print(" colors : " );
+        addfun[7]= input.next();
+        System.out.print( " Body_type :" );
+        addfun[8]= input.next();
+        System.out.print("price : " );
+        addfun[9]= price_or_available_setter();
+        System.out.print(" available : " );
+        addfun[10]= price_or_available_setter();
         car_num++;
         for (int i = 0; i < 11; i++) {
             values[car_num-1][i] = addfun[i];
         }
         file_setter();
-
         System.out.println("car has been added");
         next();
     }
-
-
-
-    public void file_setter()
-    {
-        try {
-            PrintWriter pw = new PrintWriter(new File("Data.csv"));
-
-            StringBuilder sb = new StringBuilder();
-            for (int i = 1; i < car_num; i++) {
-                for (int j = 0; j < 11; j++) {
-                    sb.append(values[i][j]);
-                    if (j < 10) {
-                        sb.append(",");
-                    }
-                }
-                sb.append("\r\n");
-            }
-            pw.write(sb.toString());
-            pw.close();
-
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
