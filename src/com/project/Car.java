@@ -10,25 +10,17 @@ public class Car extends Garage {
                 2 - Delete.
                 3 - Edit Price.
                 4 - Add.
-                5 - view.
+                5 - View.
+                6 - Main Menu.
                 enter your choice : """);
         int choice = input.nextInt();
 
-        if (choice == 1) {
-            search_type();
-        }
-        else if (choice == 2) {
-            delete(path);
-        }
-        else if (choice == 3) {
-            edit(path);
-        }
-        else if (choice == 4) {
-            add();
-        }
-        else if (choice == 5) {
-            view();
-        }
+        if (choice == 1) search_type();
+        else if (choice == 2) delete(path);
+        else if (choice == 3) edit(path);
+        else if (choice == 4) add();
+        else if (choice == 5) view();
+        else if (choice == 6) Menus.mainMenu();
         else {
             System.out.println("invalid input , please try again.");
             next();
