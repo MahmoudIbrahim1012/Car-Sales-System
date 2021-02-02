@@ -1,16 +1,13 @@
 package com.project;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Garage {
 
-    String path = "C:\\Users\\user\\IdeaProjects\\Car-Sales-System\\Data.csv";
+    String path = "Data.csv";
     String line = "";
-    String[][] values = new String[51][11];
+    String[][] values = new String[100][11];
     int car_num = 1;
     Scanner input = new Scanner(System.in);
     BufferedReader br = null;
@@ -33,25 +30,24 @@ public class Garage {
             for (int i = 0; i < temporary.length; i++) {
                 values[car_num][i] = temporary[i];
             }
-            values[car_num][10] = String.valueOf(car_num);
-            System.out.println("----------------------------------------------------------\n" +
 
-                    "\n brand : " + values[car_num][0] +
-                    "\n model : " + values[car_num][1] +
-                    "\n Condition :" + values[car_num][2] +
-                    "\n year of purchase : " + values[car_num][3] +
-                    "\n Transmission :" + values[car_num][4] +
-                    "\n Engine Capacity" + values[car_num][5] +
-                    "\n colors : " + values[car_num][6] +
-                    "\n Body_type :" + values[car_num][7] +
-                    "\n price : " + values[car_num][8] +
-                    "\n available : " + values[car_num][9] +
-                    "\n car id: " + values[car_num][10] +
+            /*System.out.println("----------------------------------------------------------\n" +
+                    "\n car id: " + values[car_num][0] +
+                    "\n brand : " + values[car_num][1] +
+                    "\n model : " + values[car_num][2] +
+                    "\n Condition :" + values[car_num][3] +
+                    "\n year of purchase : " + values[car_num][4] +
+                    "\n Transmission :" + values[car_num][5] +
+                    "\n Engine Capacity" + values[car_num][6] +
+                    "\n colors : " + values[car_num][7] +
+                    "\n Body_type :" + values[car_num][8] +
+                    "\n price : " + values[car_num][9] +
+                    "\n available : " + values[car_num][10] +
                     "\n  __________________________________________________________");
-
+*/
             car_num++;
         }
-        //System.out.println(car_num);
+
         next();
     }
 
@@ -60,19 +56,44 @@ public class Garage {
         System.out.print("""
                 1 - search.
                 2 - buy.
+                3 - view.
                 enter your choice : 
                 """);
         int choice = input.nextInt();
 
         if (choice == 1) {
             search_type();
-        } else if (choice == 2) {
+        }
+        else if (choice == 2) {
             buy();
-        } else {
+        }
+        else if (choice == 3) {
+            view();
+        }
+        else {
             System.out.println("invalid input , please try again.");
             next();
         }
 
+    }
+
+    public void view ()
+    {
+        for (int i = 1; i < car_num; i++) {
+            System.out.println(
+                "\n car id: " + values[i][0] +
+                "\n brand : " + values[i][1] +
+                "\n model : " + values[i][2] +
+                "\n Condition :" + values[i][3] +
+                "\n year of purchase : " + values[i][4] +
+                "\n Transmission :" + values[i][5] +
+                "\n Engine Capacity" + values[i][6] +
+                "\n colors : " + values[i][7] +
+                "\n Body_type :" + values[i][8] +
+                "\n price : " + values[i][9] +
+                "\n available : " + values[i][10] +
+                "\n  __________________________________________________________");
+        }
     }
 
     public void search_type() {
@@ -111,20 +132,20 @@ public class Garage {
     public void search(String brand) {
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
-            if ((brand.toLowerCase()).equals(values[i][0].toLowerCase())) {
+            if (brand.equalsIgnoreCase(values[i][1])) {
                 found = true;
                 System.out.println(
-                        "\n car id: " + i +
-                                "\n brand : " + values[i][0] +
-                                "\n model : " + values[i][1] +
-                                "\n Condition :" + values[i][2] +
-                                "\n year of purchase : " + values[i][3] +
-                                "\n Transmission :" + values[i][4] +
-                                "\n Engine Capacity" + values[i][5] +
-                                "\n colors : " + values[i][6] +
-                                "\n Body_type :" + values[i][7] +
-                                "\n price : " + values[i][8] +
-                                "\n available : " + values[i][9] +
+                                "\n car id: " + values[i][0] +
+                                "\n brand : " + values[i][1] +
+                                "\n model : " + values[i][2] +
+                                "\n Condition :" + values[i][3] +
+                                "\n year of purchase : " + values[i][4] +
+                                "\n Transmission :" + values[i][5] +
+                                "\n Engine Capacity" + values[i][6] +
+                                "\n colors : " + values[i][7] +
+                                "\n Body_type :" + values[i][8] +
+                                "\n price : " + values[i][9] +
+                                "\n available : " + values[i][10] +
                                 "\n  __________________________________________________________");
             }
 
@@ -132,36 +153,37 @@ public class Garage {
         if (!found) {
             System.out.println("no results , please try again.");
             search_type();
-        } else {
-            after_search();
+        }
+        else {
+            next();
         }
     }
 
     public void search(int year) {
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
-            if (year >= Integer.parseInt(values[i][3])) {
+            if (year >= Integer.parseInt(values[i][4])) {
                 found = true;
-                System.out.println("\n  __________________________________________________________" +
-                        "\n car id: " + i +
-                        "\n brand : " + values[i][0] +
-                        "\n model : " + values[i][1] +
-                        "\n Condition :" + values[i][2] +
-                        "\n year of purchase : " + values[i][3] +
-                        "\n Transmission :" + values[i][4] +
-                        "\n Engine Capacity" + values[i][5] +
-                        "\n colors : " + values[i][6] +
-                        "\n Body_type :" + values[i][7] +
-                        "\n price : " + values[i][8] +
-                        "\n available : " + values[i][9] +
-                        "\n  __________________________________________________________");
+                System.out.println(
+                        "\n car id: " + values[i][0] +
+                                "\n brand : " + values[i][1] +
+                                "\n model : " + values[i][2] +
+                                "\n Condition :" + values[i][3] +
+                                "\n year of purchase : " + values[i][4] +
+                                "\n Transmission :" + values[i][5] +
+                                "\n Engine Capacity" + values[i][6] +
+                                "\n colors : " + values[i][7] +
+                                "\n Body_type :" + values[i][8] +
+                                "\n price : " + values[i][9] +
+                                "\n available : " + values[i][10] +
+                                "\n  __________________________________________________________");
             }
         }
         if (!found) {
             System.out.println("no results , please try again.");
             search_type();
         } else {
-            after_search();
+            next();
         }
     }
 
@@ -169,46 +191,28 @@ public class Garage {
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
             found = true;
-            if (min <= Integer.parseInt(values[i][8]) && max >= Integer.parseInt(values[i][8])) {
-                System.out.println("\n  __________________________________________________________" +
-                        "\n car id: " + i +
-                        "\n brand : " + values[i][0] +
-                        "\n model : " + values[i][1] +
-                        "\n Condition :" + values[i][2] +
-                        "\n year of purchase : " + values[i][3] +
-                        "\n Transmission :" + values[i][4] +
-                        "\n Engine Capacity" + values[i][5] +
-                        "\n colors : " + values[i][6] +
-                        "\n Body_type :" + values[i][7] +
-                        "\n price : " + values[i][8] +
-                        "\n available : " + values[i][9] +
-                        "\n  __________________________________________________________");
+            if (min <= Integer.parseInt(values[i][9]) && max >= Integer.parseInt(values[i][9])) {
+                System.out.println(
+                        "\n car id: " + values[i][0] +
+                                "\n brand : " + values[i][1] +
+                                "\n model : " + values[i][2] +
+                                "\n Condition :" + values[i][3] +
+                                "\n year of purchase : " + values[i][4] +
+                                "\n Transmission :" + values[i][5] +
+                                "\n Engine Capacity" + values[i][6] +
+                                "\n colors : " + values[i][7] +
+                                "\n Body_type :" + values[i][8] +
+                                "\n price : " + values[i][9] +
+                                "\n available : " + values[i][10] +
+                                "\n  __________________________________________________________");
             }
         }
         if (!found) {
             System.out.println("no results , please try again.");
             search_type();
-        } else {
-            after_search();
-        }
-    }
-
-    public void after_search() {
-        System.out.print("""
-                1 - search again.
-                2 - buy a car.
-                type your choice :  
-                """);
-        int c1 = input.nextInt();
-        if (c1 == 1) {
-            search_type();
-        }
-        else if (c1 == 2) {
-            buy();
         }
         else {
-            System.out.println("invalid input , please try again.");
-            after_search();
+            next();
         }
     }
 
@@ -218,26 +222,27 @@ public class Garage {
         int id = input.nextInt();
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
-            if (id == Integer.parseInt(values[i][10]))
+            if (id == Integer.parseInt(values[i][0]))
             {
                 found = true;
-                System.out.println("\n  __________________________________________________________" +
-                        "\n car id: " + i +
-                        "\n brand : " + values[i][0] +
-                        "\n model : " + values[i][1] +
-                        "\n Condition :" + values[i][2] +
-                        "\n year of purchase : " + values[i][3] +
-                        "\n Transmission :" + values[i][4] +
-                        "\n Engine Capacity" + values[i][5] +
-                        "\n colors : " + values[i][6] +
-                        "\n Body_type :" + values[i][7] +
-                        "\n price : " + values[i][8] +
-                        "\n available : " + values[i][9] +
-                        "\n  __________________________________________________________");
-                if(Integer.parseInt(values[i][9]) > 0)
+                System.out.println(
+                                "\n car id: " + values[i][0] +
+                                "\n brand : " + values[i][1] +
+                                "\n model : " + values[i][2] +
+                                "\n Condition :" + values[i][3] +
+                                "\n year of purchase : " + values[i][4] +
+                                "\n Transmission :" + values[i][5] +
+                                "\n Engine Capacity" + values[i][6] +
+                                "\n colors : " + values[i][7] +
+                                "\n Body_type :" + values[i][8] +
+                                "\n price : " + values[i][9] +
+                                "\n available : " + values[i][10] +
+                                "\n  __________________________________________________________");
+                if(Integer.parseInt(values[i][10]) > 0)
                 {
                     System.out.print("\n the car was bought successfully");
-                    values[i][9]= String.valueOf(Integer.parseInt(values[i][9])-1);
+                    values[i][10]= String.valueOf(Integer.parseInt(values[i][10])-1);
+                    file_setter();
                 }
                 else
                 {
@@ -250,6 +255,28 @@ public class Garage {
         System.out.println("no results , please try again.");
         buy();
     }
+        next();
+    }
+
+    public void file_setter()
+    {
+        try {
+            PrintWriter pw = new PrintWriter(new File("Data.csv"));
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 1; i < car_num; i++) {
+                for (int j = 0; j < 11; j++) {
+                    sb.append(values[i][j]);
+                    if (j < 10) {
+                        sb.append(",");
+                    }
+                }
+                sb.append("\r\n");
+            }
+            pw.write(sb.toString());
+            pw.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
-
