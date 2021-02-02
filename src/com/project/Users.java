@@ -41,8 +41,9 @@ public class Users {
         BufferedWriter bw;
         try {
             bw = new BufferedWriter(new FileWriter(new File(path), true));
-            bw.write(username + "," + password + "," + "0");
+            bw.write(username + "," + password + "," + "0\n");
             bw.close();
+            Menus.mainMenu();
         } catch (IOException e) {
             e.printStackTrace();
         }
