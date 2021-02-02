@@ -5,14 +5,14 @@ import java.util.Scanner;
 
 public class Garage {
 
-    String path = "Data.csv";
-    String line = "";
-    String[][] values = new String[100][11];
-    int car_num = 1;
-    Scanner input = new Scanner(System.in);
-    BufferedReader br = null;
+    static String path = "Data.csv";
+    static String line = "";
+    static String[][] values = new String[100][11];
+    static int car_num = 1;
+    static Scanner input = new Scanner(System.in);
+    static BufferedReader br = null;
 
-    public Garage() {
+    public static void GarageMenu() {
         try {
             br = new BufferedReader(new FileReader(path));
         } catch (FileNotFoundException e) {
@@ -31,45 +31,26 @@ public class Garage {
                 values[car_num][i] = temporary[i];
             }
 
-            /*System.out.println("----------------------------------------------------------\n" +
-                    "\n car id: " + values[car_num][0] +
-                    "\n brand : " + values[car_num][1] +
-                    "\n model : " + values[car_num][2] +
-                    "\n Condition :" + values[car_num][3] +
-                    "\n year of purchase : " + values[car_num][4] +
-                    "\n Transmission :" + values[car_num][5] +
-                    "\n Engine Capacity" + values[car_num][6] +
-                    "\n colors : " + values[car_num][7] +
-                    "\n Body_type :" + values[car_num][8] +
-                    "\n price : " + values[car_num][9] +
-                    "\n available : " + values[car_num][10] +
-                    "\n  __________________________________________________________");
-*/
             car_num++;
         }
 
         next();
     }
 
-    public void next() {
+    public static void next() {
         //Scanner input = new Scanner(System.in);
         System.out.print("""
                 1 - search.
                 2 - buy.
                 3 - view.
-                enter your choice : 
-                """);
+                4 - log out
+                enter your choice: """);
         int choice = input.nextInt();
 
-        if (choice == 1) {
-            search_type();
-        }
-        else if (choice == 2) {
-            buy();
-        }
-        else if (choice == 3) {
-            view();
-        }
+        if (choice == 1) search_type();
+        else if (choice == 2) buy();
+        else if (choice == 3) view();
+        else if (choice == 4) Menus.mainMenu();
         else {
             System.out.println("invalid input , please try again.");
             next();
@@ -77,26 +58,26 @@ public class Garage {
 
     }
 
-    public void view ()
-    {
+    public static void view() {
         for (int i = 1; i < car_num; i++) {
             System.out.println(
-                "\n car id: " + values[i][0] +
-                "\n brand : " + values[i][1] +
-                "\n model : " + values[i][2] +
-                "\n Condition :" + values[i][3] +
-                "\n year of purchase : " + values[i][4] +
-                "\n Transmission :" + values[i][5] +
-                "\n Engine Capacity" + values[i][6] +
+                    "\n car id: " + values[i][0] +
+                            "\n brand : " + values[i][1] +
+                            "\n model : " + values[i][2] +
+                            "\n Condition :" + values[i][3] +
+                            "\n year of purchase : " + values[i][4] +
+                            "\n Transmission :" + values[i][5] +
+                            "\n Engine Capacity" + values[i][6] +
                 "\n colors : " + values[i][7] +
                 "\n Body_type :" + values[i][8] +
                 "\n price : " + values[i][9] +
                 "\n available : " + values[i][10] +
                 "\n  __________________________________________________________");
         }
+        next();
     }
 
-    public void search_type() {
+    public static void search_type() {
         Scanner input = new Scanner(System.in);
         System.out.print("""
                  *********************************************************
@@ -129,13 +110,13 @@ public class Garage {
         }
     }
 
-    public void search(String brand) {
+    public static void search(String brand) {
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
             if (brand.equalsIgnoreCase(values[i][1])) {
                 found = true;
                 System.out.println(
-                                "\n car id: " + values[i][0] +
+                        "\n car id: " + values[i][0] +
                                 "\n brand : " + values[i][1] +
                                 "\n model : " + values[i][2] +
                                 "\n Condition :" + values[i][3] +
@@ -159,7 +140,7 @@ public class Garage {
         }
     }
 
-    public void search(int year) {
+    public static void search(int year) {
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
             if (year >= Integer.parseInt(values[i][4])) {
@@ -187,7 +168,7 @@ public class Garage {
         }
     }
 
-    public void search(int min, int max) {
+    public static void search(int min, int max) {
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
             found = true;
@@ -216,17 +197,15 @@ public class Garage {
         }
     }
 
-    public void buy()
-    {
+    public static void buy() {
         System.out.print("type car id you want to buy : ");
         int id = input.nextInt();
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
-            if (id == Integer.parseInt(values[i][0]))
-            {
+            if (id == Integer.parseInt(values[i][0])) {
                 found = true;
                 System.out.println(
-                                "\n car id: " + values[i][0] +
+                        "\n car id: " + values[i][0] +
                                 "\n brand : " + values[i][1] +
                                 "\n model : " + values[i][2] +
                                 "\n Condition :" + values[i][3] +
@@ -237,11 +216,11 @@ public class Garage {
                                 "\n Body_type :" + values[i][8] +
                                 "\n price : " + values[i][9] +
                                 "\n available : " + values[i][10] +
-                                "\n  __________________________________________________________");
+                                "\n  __________________________________________________________\n");
                 if(Integer.parseInt(values[i][10]) > 0)
                 {
-                    System.out.print("\n the car was bought successfully");
-                    values[i][10]= String.valueOf(Integer.parseInt(values[i][10])-1);
+                    System.out.println("\n the car was bought successfully\n");
+                    values[i][10] = String.valueOf(Integer.parseInt(values[i][10]) - 1);
                     file_setter();
                 }
                 else
@@ -258,8 +237,7 @@ public class Garage {
         next();
     }
 
-    public void file_setter()
-    {
+    public static void file_setter() {
         try {
             PrintWriter pw = new PrintWriter(new File("Data.csv"));
 

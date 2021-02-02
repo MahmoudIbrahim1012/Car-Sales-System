@@ -13,7 +13,7 @@ public class Menus {
                 """);
         int choice = input.nextInt();
         switch (choice) {
-            case 1:
+            case 1 -> {
                 int isLogged = 0;
                 while (isLogged == 0) {
                     System.out.println("If you want to go back to main menu, type e in both username and password.");
@@ -22,19 +22,23 @@ public class Menus {
                     System.out.print("Enter password: ");
                     String password = input.next();
                     isLogged = Users.signIn(username, password);
-                    if (isLogged == 2)
+                    if (isLogged == 1)
                         mainMenu();
+                    else if (isLogged == 2)
+                        Garage.GarageMenu();
+                    else if (isLogged == 3)
+                        Car.next();
+
                 }
-                break;
-            case 2:
+            }
+            case 2 -> {
                 System.out.print("Enter Username: ");
                 String username = input.next();
                 System.out.print("Enter password: ");
                 String password = input.next();
                 Users.signUp(username, password);
-                break;
-            default:
-                System.out.println("Invalid input. ");
+            }
+            default -> System.out.println("Invalid input. ");
         }
     }
 }
