@@ -27,7 +27,11 @@ public class Menus {
                 }
                 break;
             case 2:
-                // sign up function
+                System.out.print("Enter Username: ");
+                String username = input.next();
+                System.out.print("Enter password: ");
+                String password = input.next();
+                Users.signUp(username, password);
                 break;
             default:
                 System.out.println("Invalid input. ");

@@ -1,23 +1,15 @@
 package com.project;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class Users {
     String username;
     String password;
-
+    static String path = "C:\\Users\\Dell\\IdeaProjects\\Car Sales System\\Users.csv";
 
     public static int signIn(String username, String password) {
-
-
-        String path = "Users.csv";
-                //"C:\\Users\\Dell\\IdeaProjects\\Car Sales System\\Users.csv";
         String line;
         BufferedReader br;
-
         try {
             br = new BufferedReader(new FileReader(path));
 
@@ -33,7 +25,6 @@ public class Users {
                     System.out.println("Returning to main menu.");
                     return 2; // Returning 2 means returning to main menu
                 }
-
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -43,5 +34,16 @@ public class Users {
 
         System.out.println("Incorrect username.");
         return 0;
+    }
+
+    public static void signUp(String username, String password) {
+        BufferedWriter bw;
+        try {
+            bw = new BufferedWriter(new FileWriter(new File(path), true));
+            bw.write(username + "," + password + "," + "0");
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
