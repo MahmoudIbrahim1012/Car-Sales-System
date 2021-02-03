@@ -11,6 +11,7 @@ public class Car extends Garage {
                 3 - Edit Price.
                 4 - Add.
                 5 - view.
+                4 - log out
                 enter your choice : """);
         int choice = input.nextInt();
 
@@ -29,6 +30,10 @@ public class Car extends Garage {
         else if (choice == 5) {
             view();
         }
+        else if (choice == 6) {
+            Menus.mainMenu();
+        }
+
         else {
             System.out.println("invalid input , please try again.");
             next();
