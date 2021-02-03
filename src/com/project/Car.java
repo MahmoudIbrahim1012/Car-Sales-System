@@ -2,16 +2,15 @@ package com.project;
 
 
 public class Car extends Garage {
-
-    public static void next() {
-
+    final ThreadLocal<Menus> menus = ThreadLocal.withInitial(Menus::new);
+    public void next() {
         System.out.print("""
                 1 - Search.
                 2 - Delete.
                 3 - Edit Price.
                 4 - Add.
                 5 - view.
-                4 - log out
+                6 - log out
                 enter your choice : """);
         int choice = input.nextInt();
 
@@ -31,7 +30,7 @@ public class Car extends Garage {
             view();
         }
         else if (choice == 6) {
-            Menus.mainMenu();
+            menus.get().mainMenu();
         }
 
         else {
@@ -40,19 +39,13 @@ public class Car extends Garage {
         }
     }
 
-    public static boolean is_number(String x) {
-        try {
-            Integer.parseInt(x);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
-    public static String id_setter() {
+
+    public String id_setter() {
         String id;
         boolean unique = true;
-        if (is_number(id = input.next())) {
+        if (is_number(id = input.next()))
+        {
             for (int i = 1; i < car_num; i++) {
                 if (id.equalsIgnoreCase(values[i][0])) {
                     unique = false;
@@ -67,7 +60,7 @@ public class Car extends Garage {
         return id_setter();
     }
 
-    public static String year_setter() {
+    public String year_setter() {
         String num;
         if (is_number(num = input.next())) {
             if (Integer.parseInt(num) <= 2021 && Integer.parseInt(num) > 1900) {
@@ -79,7 +72,7 @@ public class Car extends Garage {
         return year_setter();
     }
 
-    public static String price_or_available_setter() {
+    public String price_or_available_setter() {
         String num;
         if (is_number(num = input.next())) {
 
@@ -91,7 +84,7 @@ public class Car extends Garage {
         return price_or_available_setter();
     }
 
-    public static int check_id() {
+    public int check_id() {
         int id = input.nextInt();
         for (int i = 1; i < car_num; i++) {
             if (id == Integer.parseInt(values[i][0])) {
@@ -102,7 +95,7 @@ public class Car extends Garage {
         return check_id();
     }
 
-    public static void delete(String Path) {
+    public void delete(String Path) {
         System.out.println("please enter the car id you want to delete:");
         for (int k = check_id(); k < car_num - 1; k++) {
             for (int j = 0; j < 11; j++) {
@@ -116,7 +109,7 @@ public class Car extends Garage {
 
     }
 
-    public static void edit(String Path) {
+    public void edit(String Path) {
         String check_id;
         String new_price;
         System.out.println("please enter the car id you want to edit");
@@ -143,7 +136,7 @@ public class Car extends Garage {
         }
     }
 
-    public static void add() {
+    public void add() {
         String[] addfun = new String[11];
         System.out.print("please enter the car id you want to add : ");
         addfun[0] = id_setter();

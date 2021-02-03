@@ -7,8 +7,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         Scanner input = new Scanner(System.in);
-        Menus.mainMenu();
+        Menus menus = new Menus();
+        //Garage g = new Garage();
+        //Car c = new Car();
     }
 }
-
-

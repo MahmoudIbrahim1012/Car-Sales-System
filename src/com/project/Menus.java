@@ -1,10 +1,14 @@
 package com.project;
-
 import java.util.Scanner;
-
 public class Menus {
-
-    public static void mainMenu() {
+    public Menus()
+    {
+        mainMenu();
+    }
+    Users users = new Users();
+    Garage garage = new Garage();
+    Car car = new Car();
+    public void mainMenu() {
         Scanner input = new Scanner(System.in);
         System.out.print("""
                 ---------- CAR SALES SYSTEM -----------
@@ -21,14 +25,13 @@ public class Menus {
                     String username = input.next();
                     System.out.print("Enter password: ");
                     String password = input.next();
-                    isLogged = Users.signIn(username, password);
+                    isLogged = users.signIn(username, password);
                     if (isLogged == 1)
                         mainMenu();
                     else if (isLogged == 2)
-                        Garage.GarageMenu();
+                        garage.next();
                     else if (isLogged == 3)
-                        Car.next();
-
+                        car.next();
                 }
             }
             case 2 -> {
@@ -36,7 +39,7 @@ public class Menus {
                 String username = input.next();
                 System.out.print("Enter password: ");
                 String password = input.next();
-                Users.signUp(username, password);
+                users.signUp(username, password);
             }
             default -> System.out.println("Invalid input. ");
         }

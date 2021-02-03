@@ -5,14 +5,15 @@ import java.util.Scanner;
 
 public class Garage {
 
-    static String path = "Data.csv";
-    static String line = "";
-    static String[][] values = new String[100][11];
-    static int car_num = 1;
-    static Scanner input = new Scanner(System.in);
-    static BufferedReader br = null;
+    String path = "Data.csv";
+    String line = "";
+    String[][] values = new String[100][11];
+    int car_num = 1;
+    Scanner input = new Scanner(System.in);
+    BufferedReader br = null;
+    final ThreadLocal<Menus> menus = ThreadLocal.withInitial(Menus::new);
 
-    public static void GarageMenu() {
+    public Garage() {
         try {
             br = new BufferedReader(new FileReader(path));
         } catch (FileNotFoundException e) {
@@ -33,11 +34,10 @@ public class Garage {
 
             car_num++;
         }
-
-        next();
+        //next();
     }
 
-    public static void next() {
+    public void next() {
         //Scanner input = new Scanner(System.in);
         System.out.print("""
                 1 - search.
@@ -46,11 +46,10 @@ public class Garage {
                 4 - log out
                 enter your choice: """);
         int choice = input.nextInt();
-
         if (choice == 1) search_type();
         else if (choice == 2) buy();
         else if (choice == 3) view();
-        else if (choice == 4) Menus.mainMenu();
+        else if (choice == 4) menus.get().mainMenu();
         else {
             System.out.println("invalid input , please try again.");
             next();
@@ -58,7 +57,7 @@ public class Garage {
 
     }
 
-    public static void view() {
+    public void view() {
         for (int i = 1; i < car_num; i++) {
             System.out.println(
                     "\n car id: " + values[i][0] +
@@ -77,7 +76,7 @@ public class Garage {
         next();
     }
 
-    public static void search_type() {
+    public void search_type() {
         Scanner input = new Scanner(System.in);
         System.out.print("""
                  *********************************************************
@@ -110,7 +109,7 @@ public class Garage {
         }
     }
 
-    public static void search(String brand) {
+    public void search(String brand) {
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
             if (brand.equalsIgnoreCase(values[i][1])) {
@@ -140,7 +139,7 @@ public class Garage {
         }
     }
 
-    public static void search(int year) {
+    public void search(int year) {
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
             if (year >= Integer.parseInt(values[i][4])) {
@@ -168,7 +167,7 @@ public class Garage {
         }
     }
 
-    public static void search(int min, int max) {
+    public void search(int min, int max) {
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
             found = true;
@@ -197,7 +196,7 @@ public class Garage {
         }
     }
 
-    public static void buy() {
+    public void buy() {
         System.out.print("type car id you want to buy : ");
         int id = input.nextInt();
         boolean found = false;
@@ -237,7 +236,7 @@ public class Garage {
         next();
     }
 
-    public static void file_setter() {
+    public void file_setter() {
         try {
             PrintWriter pw = new PrintWriter(new File("Data.csv"));
 
@@ -255,6 +254,15 @@ public class Garage {
             pw.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+    public boolean is_number(String x) {
+        try {
+            Integer.parseInt(x);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }

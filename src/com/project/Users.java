@@ -5,9 +5,12 @@ import java.io.*;
 public class Users {
     String username;
     String password;
-    static String path = "Users.csv";
-
-    public static int signIn(String username, String password) {
+    String path = "Users.csv";
+    public final ThreadLocal<Menus> menus = ThreadLocal.withInitial(Menus::new);
+    public Users()
+    {
+    }
+    public int signIn(String username, String password) {
         String line;
         BufferedReader br;
         try {
@@ -29,7 +32,8 @@ public class Users {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -37,13 +41,13 @@ public class Users {
         return 0;
     }
 
-    public static void signUp(String username, String password) {
+    public void signUp(String username, String password) {
         BufferedWriter bw;
         try {
             bw = new BufferedWriter(new FileWriter(new File(path), true));
             bw.write(username + "," + password + "," + "0\n");
             bw.close();
-            Menus.mainMenu();
+            menus.get().mainMenu();
         } catch (IOException e) {
             e.printStackTrace();
         }
