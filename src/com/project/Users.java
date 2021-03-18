@@ -7,12 +7,11 @@ public class Users {
     String username;
     String password;
     String path = "Users.csv";
-    //Menus menus = new Menus();
-    public final ThreadLocal<Menus> menus = ThreadLocal.withInitial(Menus::new);
-    public Users()
-    {
+
+    public Users() {
 
     }
+
     public int signIn(String username, String password) {
         String line;
         BufferedReader br;
@@ -35,8 +34,7 @@ public class Users {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -44,15 +42,16 @@ public class Users {
         return 0;
     }
 
-    public void signUp(String username, String password) {
+    public boolean signUp(String username, String password) {
         BufferedWriter bw;
         try {
             bw = new BufferedWriter(new FileWriter(new File(path), true));
             bw.write(username + "," + password + "," + "0\n");
             bw.close();
-            menus.get().mainMenu();
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
     }
 }

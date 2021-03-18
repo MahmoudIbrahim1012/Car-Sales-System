@@ -1,13 +1,16 @@
 package com.project;
+
 import java.util.Scanner;
+
 public class Menus {
-    public Menus()
-    {
+    public Menus() {
         //mainMenu();
     }
+
     Users users = new Users();
     Garage garage = new Garage();
     Car car = new Car();
+
     public void mainMenu() {
         Scanner input = new Scanner(System.in);
         System.out.print("""
@@ -39,7 +42,10 @@ public class Menus {
                 String username = input.next();
                 System.out.print("Enter password: ");
                 String password = input.next();
-                users.signUp(username, password);
+                if (users.signUp(username, password)) System.out.println("Welcome!");
+                else
+                    System.out.println("Error signing up, returning to main menu.");
+                this.mainMenu();
             }
             default -> System.out.println("Invalid input. ");
         }

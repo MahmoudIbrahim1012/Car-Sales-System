@@ -1,4 +1,5 @@
 package com.project;
+
 import java.io.*;
 import java.util.Scanner;
 
@@ -42,13 +43,15 @@ public class Garage extends File_control {
                 4 - log out
                 enter your choice: """);
         int choice = input.nextInt();
-        if (choice == 1) search_type();
-        else if (choice == 2) buy();
-        else if (choice == 3) view();
-        else if (choice == 4) menus.get().mainMenu();
-        else {
-            System.out.println("invalid input , please try again.");
-            next();
+        switch (choice) {
+            case 1 -> search_type();
+            case 2 -> buy();
+            case 3 -> view();
+            case 4 -> menus.get().mainMenu();
+            default -> {
+                System.out.println("invalid input , please try again.");
+                next();
+            }
         }
 
     }
@@ -63,11 +66,11 @@ public class Garage extends File_control {
                             "\n year of purchase : " + values[i][4] +
                             "\n Transmission :" + values[i][5] +
                             "\n Engine Capacity" + values[i][6] +
-                "\n colors : " + values[i][7] +
-                "\n Body_type :" + values[i][8] +
-                "\n price : " + values[i][9] +
-                "\n available : " + values[i][10] +
-                "\n  __________________________________________________________");
+                            "\n colors : " + values[i][7] +
+                            "\n Body_type :" + values[i][8] +
+                            "\n price : " + values[i][9] +
+                            "\n available : " + values[i][10] +
+                            "\n  __________________________________________________________");
         }
         next();
     }
@@ -85,31 +88,25 @@ public class Garage extends File_control {
             System.out.print("type required manufacturer type : ");
             String c2 = input.next();
             search(c2);
-        }
-        else if (c1.equals("2")) {
+        } else if (c1.equals("2")) {
             System.out.println("before : ");
             String c2 = input.next();
-            if(is_number(c2))
-            {
+            if (is_number(c2)) {
                 search(Integer.parseInt(c2));
-            }
-            else {
+            } else {
                 System.out.println("invalid input , please try again.");
                 search_type();
             }
-        }
-        else if (c1.equals("3")) {
+        } else if (c1.equals("3")) {
             System.out.println("minimum price : ");
             String c2 = input.next();
-            if(!is_number(c2))
-            {
+            if (!is_number(c2)) {
                 System.out.println("invalid input , please try again.");
                 search_type();
             }
             System.out.println("maximum price : ");
             String c3 = input.next();
-            if(!is_number(c3))
-            {
+            if (!is_number(c3)) {
                 System.out.println("invalid input , please try again.");
                 search_type();
             }
@@ -146,8 +143,7 @@ public class Garage extends File_control {
         if (!found) {
             System.out.println("no results , please try again.");
             search_type();
-        }
-        else {
+        } else {
             next();
         }
     }
@@ -203,8 +199,7 @@ public class Garage extends File_control {
         if (!found) {
             System.out.println("no results , please try again.");
             search_type();
-        }
-        else {
+        } else {
             next();
         }
     }
@@ -212,8 +207,7 @@ public class Garage extends File_control {
     void buy() {
         System.out.print("type car id you want to buy : ");
         String id = input.next();
-        if(!is_number(id))
-        {
+        if (!is_number(id)) {
             System.out.println("invalid input , please try again.");
             buy();
         }
@@ -234,23 +228,20 @@ public class Garage extends File_control {
                                 "\n price : " + values[i][9] +
                                 "\n available : " + values[i][10] +
                                 "\n  __________________________________________________________\n");
-                if(Integer.parseInt(values[i][10]) > 0)
-                {
+                if (Integer.parseInt(values[i][10]) > 0) {
                     System.out.println("\n the car was bought successfully\n");
                     values[i][10] = String.valueOf(Integer.parseInt(values[i][10]) - 1);
                     file_setter();
-                }
-                else
-                {
+                } else {
                     System.out.println("sorry, this car is not available now please try again later.");
                 }
             }
 
         }
-        if (!found){
-        System.out.println("no results , please try again.");
-        buy();
-    }
+        if (!found) {
+            System.out.println("no results , please try again.");
+            buy();
+        }
         next();
     }
 
