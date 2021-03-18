@@ -1,10 +1,8 @@
 package com.project;
-
 import java.io.*;
 import java.util.Scanner;
 
-public class Garage {
-
+public class Garage extends File_control {
     String path = "Data.csv";
     String line = "";
     String[][] values = new String[100][11];
@@ -34,11 +32,9 @@ public class Garage {
 
             car_num++;
         }
-        //next();
     }
 
     public void next() {
-        //Scanner input = new Scanner(System.in);
         System.out.print("""
                 1 - search.
                 2 - buy.
@@ -57,7 +53,7 @@ public class Garage {
 
     }
 
-    public void view() {
+    void view() {
         for (int i = 1; i < car_num; i++) {
             System.out.println(
                     "\n car id: " + values[i][0] +
@@ -76,31 +72,48 @@ public class Garage {
         next();
     }
 
-    public void search_type() {
+    void search_type() {
         Scanner input = new Scanner(System.in);
         System.out.print("""
                  *********************************************************
                 1 - search by manufacturer type.
                 2 - search by year of purchase.
                 3 - search by cost.
-                type your choice : 
-                """);
-        int c1 = input.nextInt();
-        if (c1 == 1) {
+                type your choice : """);
+        String c1 = input.next();
+        if (c1.equals("1")) {
             System.out.print("type required manufacturer type : ");
             String c2 = input.next();
             search(c2);
-
-        } else if (c1 == 2) {
+        }
+        else if (c1.equals("2")) {
             System.out.println("before : ");
-            int c2 = input.nextInt();
-            search(c2);
-        } else if (c1 == 3) {
+            String c2 = input.next();
+            if(is_number(c2))
+            {
+                search(Integer.parseInt(c2));
+            }
+            else {
+                System.out.println("invalid input , please try again.");
+                search_type();
+            }
+        }
+        else if (c1.equals("3")) {
             System.out.println("minimum price : ");
-            int c2 = input.nextInt();
+            String c2 = input.next();
+            if(!is_number(c2))
+            {
+                System.out.println("invalid input , please try again.");
+                search_type();
+            }
             System.out.println("maximum price : ");
-            int c3 = input.nextInt();
-            search(c2, c3);
+            String c3 = input.next();
+            if(!is_number(c3))
+            {
+                System.out.println("invalid input , please try again.");
+                search_type();
+            }
+            search(Integer.parseInt(c2), Integer.parseInt(c3));
 
 
         } else {
@@ -109,7 +122,7 @@ public class Garage {
         }
     }
 
-    public void search(String brand) {
+    void search(String brand) {
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
             if (brand.equalsIgnoreCase(values[i][1])) {
@@ -139,7 +152,7 @@ public class Garage {
         }
     }
 
-    public void search(int year) {
+    void search(int year) {
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
             if (year >= Integer.parseInt(values[i][4])) {
@@ -167,7 +180,7 @@ public class Garage {
         }
     }
 
-    public void search(int min, int max) {
+    void search(int min, int max) {
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
             found = true;
@@ -196,12 +209,17 @@ public class Garage {
         }
     }
 
-    public void buy() {
+    void buy() {
         System.out.print("type car id you want to buy : ");
-        int id = input.nextInt();
+        String id = input.next();
+        if(!is_number(id))
+        {
+            System.out.println("invalid input , please try again.");
+            buy();
+        }
         boolean found = false;
         for (int i = 1; i < car_num; i++) {
-            if (id == Integer.parseInt(values[i][0])) {
+            if (Integer.parseInt(id) == Integer.parseInt(values[i][0])) {
                 found = true;
                 System.out.println(
                         "\n car id: " + values[i][0] +
@@ -236,7 +254,7 @@ public class Garage {
         next();
     }
 
-    public void file_setter() {
+    void file_setter() {
         try {
             PrintWriter pw = new PrintWriter(new File("Data.csv"));
 
@@ -257,7 +275,7 @@ public class Garage {
         }
     }
 
-    public boolean is_number(String x) {
+    boolean is_number(String x) {
         try {
             Integer.parseInt(x);
             return true;
@@ -265,4 +283,6 @@ public class Garage {
             return false;
         }
     }
+
+
 }

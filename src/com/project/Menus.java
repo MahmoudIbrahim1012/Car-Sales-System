@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Menus {
     public Menus()
     {
-        mainMenu();
+        //mainMenu();
     }
     Users users = new Users();
     Garage garage = new Garage();
@@ -14,7 +14,7 @@ public class Menus {
                 ---------- CAR SALES SYSTEM -----------
                 1 - SIGN IN
                 2 - SIGN UP
-                """);
+                enter your choice : """);
         int choice = input.nextInt();
         switch (choice) {
             case 1 -> {
