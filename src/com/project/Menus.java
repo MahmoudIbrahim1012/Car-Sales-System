@@ -10,7 +10,7 @@ public class Menus {
     Users users = new Users();
     Garage garage = new Garage();
     Car car = new Car();
-
+    int logout =0 ;
     public void mainMenu() {
         Scanner input = new Scanner(System.in);
         System.out.print("""
@@ -32,9 +32,9 @@ public class Menus {
                     if (isLogged == 1)
                         mainMenu();
                     else if (isLogged == 2)
-                        garage.next();
+                        logout= garage.next();
                     else if (isLogged == 3)
-                        car.next();
+                        logout = car.next();
                 }
             }
             case 2 -> {
@@ -48,6 +48,11 @@ public class Menus {
                 this.mainMenu();
             }
             default -> System.out.println("Invalid input. ");
+        }
+        if(logout == 1)
+        {
+            logout =0;
+            this.mainMenu();
         }
     }
 }

@@ -2,7 +2,7 @@ package com.project;
 
 
 public class Car extends Garage {
-    public void next() {
+    public int next() {
         System.out.print("""
                 1 - Search.
                 2 - Delete.
@@ -15,26 +15,33 @@ public class Car extends Garage {
 
         if (choice.equals("1")) {
             search_type();
+            return 0;
         }
         else if (choice.equals("2")) {
             delete(path);
+            return 0;
         }
         else if (choice.equals("3")) {
             edit(path);
+            return 0;
         }
         else if (choice.equals("4")) {
             add();
+            return 0;
         }
         else if (choice.equals("5")) {
             view();
+            return 0;
         }
         else if (choice.equals("6")) {
-            menus.get().mainMenu();
+            //menus.get().mainMenu();
+            return 1;
         }
 
         else {
             System.out.println("invalid input , please try again.");
             next();
+            return 0;
         }
     }
 
@@ -87,7 +94,7 @@ public class Car extends Garage {
         int id = input.nextInt();
         for (int i = 1; i < car_num; i++) {
             if (id == Integer.parseInt(values[i][0])) {
-                return id;
+                return i;
             }
         }
         System.out.print("invalid input , please enter the car id again :");

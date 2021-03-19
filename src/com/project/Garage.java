@@ -10,7 +10,7 @@ public class Garage extends File_control {
     int car_num = 1;
     Scanner input = new Scanner(System.in);
     BufferedReader br = null;
-    final ThreadLocal<Menus> menus = ThreadLocal.withInitial(Menus::new);
+    //final ThreadLocal<Menus> menus = ThreadLocal.withInitial(Menus::new);
 
     public Garage() {
         try {
@@ -35,7 +35,7 @@ public class Garage extends File_control {
         }
     }
 
-    public void next() {
+    public int next() {
         System.out.print("""
                 1 - search.
                 2 - buy.
@@ -43,15 +43,22 @@ public class Garage extends File_control {
                 4 - log out
                 enter your choice: """);
         int choice = input.nextInt();
-        switch (choice) {
-            case 1 -> search_type();
-            case 2 -> buy();
-            case 3 -> view();
-            case 4 -> menus.get().mainMenu();
-            default -> {
-                System.out.println("invalid input , please try again.");
-                next();
-            }
+        if (choice == 1) {
+            search_type();
+            return 0;
+        } else if (choice == 2) {
+            buy();
+            return 0;
+        } else if (choice == 3) {
+            view();
+            return 0;
+        } else if (choice == 4) {
+            //menus.get().mainMenu();
+            return 1;
+        } else {
+            System.out.println("invalid input , please try again.");
+            next();
+            return 0;
         }
 
     }
